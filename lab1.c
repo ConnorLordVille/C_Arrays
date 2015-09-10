@@ -1,58 +1,49 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <strings.h>
 
-/********************************* 
-Program: Lab 1
-Author: Joe Meli
-Date:  9/9/15
-Time spent: all day everyday 
-Purpose:
- ******************************/
-void loadBookName(void);
 
-int main( int argc, char* argv[]){
+void loadBookName(char file_name[], char array1[],char array2[]);
 
-loadBookName();
+int main(int argc,char* argv[])
+{	//will hold the file name 
+	char file[100];
 
+	char author[55];
+	char bookname[55];
+	printf("File Name:");
+	scanf("%s",file);
+	loadBookName(file, author,bookname);
 	return 0;
 }
 
-// make function  that loads 
-void loadBookName ( void){
-	char comma = ',';
-// File Pointer	
-FILE * fp;
 
-// Array to hold author Names
-char token;
-char author[55];
-char name[55];
-//loop control variable 
-int i = 0;
-int j = 0;
-// open file
-fp = fopen("books.txt", "r");
-if(fp==NULL)
+//Precondtion: 
+void loadBookName(char file_name[],char array1[],char array2[])
 {
-	printf("Error");
-	exit(-1);
-}
-
-
-// reads through file and prints consectutive charaters
-while(fscanf(fp,"%c",&token)!=EOF)
-{	
-	if (token == comma)
+	// File pointer
+	FILE *fp;
+	// buffer for reading the text file
+	char buffer [100];
+	// opens file ffvs
+	fp = fopen(file_name,"r");
+	//checks the file to make sure it contains info
+	// otherwise exits program
+	if ( fp == NULL)
 	{
-		token = NULL;
-		printf("\n");
+		printf("Error");
+		exit(1);
+	}
 
+	// starts getting the text from the file and loadin
+	// into the buffer
+	while (fgets(buffer,100,fp)!=NULL)
+	{
+		printf("%s\n",strtok(buffer, ","));
+		
 	}
 	
-	printf("%c",token);
 	
+	fclose(fp);
 }
-
-
-fclose(fp);
-}
+//Postcondtion: 
