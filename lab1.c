@@ -3,7 +3,7 @@
 #include <string.h>
 
 
-void loadBookName(char file_name[], char books[],char writers[]);
+void loadBookName(char file_name[], char* books[],char* writers[]);
 
 int main(int argc,char* argv[])
 {	//will hold the file name
@@ -13,11 +13,12 @@ int main(int argc,char* argv[])
 	char *bookname[55];
 	printf("File Name:");
 	scanf("%s",file);
-	loadBookName(file, *author,*bookname);
+	loadBookName(file, author,bookname);
+	//printf("%s\n %s",author[55],bookname[55] );
 	return 0;
 }
 //Precondtion:
-void loadBookName(char file_name[],char books[],char writers[])
+void loadBookName(char file_name[],char *books[],char* writers[])
 {
 	// File pointer
 	FILE *fp;
@@ -27,6 +28,7 @@ void loadBookName(char file_name[],char books[],char writers[])
 	const char comma[2] = ",";
 	int i = 0;
 	int j= 0;
+	int x = 0;
 	// opens file
 	fp = fopen(file_name,"r");
 	//checks the file to make sure it contains info
@@ -40,25 +42,28 @@ void loadBookName(char file_name[],char books[],char writers[])
 		while (fgets(buffer,500,fp)!=NULL)
 		{// this loop goes through file using the buffer
 			// reads from the begging of the line to the comma
-			token = strtok(buffer, comma);
-			//load into array
-		//	strcpy( token, &writers[i]);
-i++;
 
+			token = strtok(buffer, comma);
+			//printf("%s\n",token );
+		//	books[i] = token;
+				i++;
 			while( token != NULL )
 			{
-			
-				 printf( " %s\n", token );
+			// load into array
+			writers[j] = token;
+			printf("%s\n",token );
 				 token = strtok(NULL, "\n");
-				 // load into array
 
 
 			}
-			j++;
-
+				j++;
 }
-		printf("%d\n",i );
-		printf("%d\n",j );
+
+//for( x = 0; x < 55; x ++)
+//{
+//printf("%s\n",books[x] );
+//printf("%s\n",writers[x]);
+//}
 		//end of while
 	fclose(fp);
 }
